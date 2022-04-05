@@ -33,6 +33,11 @@ fn main() {
 fn dump_images(file_handles: ImageFileWithLabels, quantity: u32) -> std::io::Result<()> {
     let (mut source, mut labels) = file_handles;
     let mut num_images_read = 0;
+
+    let mut digit_counts: [u32; 10] = [
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+    ];
+
     while num_images_read < quantity {
         let label = read_u8(&mut labels)?;
         let image_data = read_image_data(&mut source)?;
@@ -40,8 +45,9 @@ fn dump_images(file_handles: ImageFileWithLabels, quantity: u32) -> std::io::Res
         let img = GrayImage::from_raw(28, 28, image_data);
         match img {
             Some(buf) => {
-                let img_destination = format!("./out/img-{}-is-a-{}.bmp", num_images_read, label);
+                let img_destination = format!("./out/{}/d{}-{:0>4}.bmp", label, label, digit_counts[label as usize]);
                 buf.save_with_format(img_destination, ImageFormat::Bmp).expect("Failed to save image");
+                digit_counts[label as usize] += 1;
             },
             None => {
                 eprintln!("Failed to create image buffer from data!")
