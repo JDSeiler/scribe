@@ -34,15 +34,16 @@ For example, if your directory structure looks like this:
   train-labels-idx1-ubyte
 ```
 You could invoke the script like this to dump all 10,000 testing images:
-`scribe ./mnist/t10k-images-idx3-ubyte ./mnist/t10k-labels-idx1-ubyte 1 10000`
+`./target/release/scribe ./mnist/t10k-images-idx3-ubyte ./mnist/t10k-labels-idx1-ubyte 1 10000`
 
 As another example, you could just dump 3,000 images, starting from image number 6,000:
-`scribe ./mnist/t10k-images-idx3-ubyte ./mnist/t10k-labels-idx1-ubyte 6000 3000`
+`./target/release/scribe ./mnist/t10k-images-idx3-ubyte ./mnist/t10k-labels-idx1-ubyte 6000 3000`
 
-The script will put all output images in a directory called `out`. This directory will
-be created in the current working directory. The images are named in the form:
-`img-{image_index}-is-a-{image_label}.bmp`. So: `img-50-is-a-9.bmp` is the 50th image
-read by the script (not the 50th image overall!) and it's a 9.
+The script will output images in a directory called `out`. Images are organized by the type into
+separate folders. That is, all the zeros go into `./out/0`, all the ones into `./out/1`, etc.
+Each image is named in the following pattern: `d{type}-{id}.bmp` so the name: `d5-0040.bmp` would
+indicate this image is a 5 (denoted by d5) and it is the 41st 5 out of all 5s read from the dataset.
+The images are 0 indexed, which is why `0040` is the 41st image.
 
 You can also print a help message by invoking the script with a single option: `--help`, like so:
 `scribe --help`.
