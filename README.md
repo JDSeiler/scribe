@@ -4,6 +4,20 @@ to a collection of BMP images.
 ## Running the script
 To compile, run `cargo build --release`. You will find the executable in the directory `./target/release`. 
 
+Then, at the same level as the `src` directory, create the following directories:
+```
+./out/0
+./out/1
+./out/2
+./out/3
+./out/4
+./out/5
+./out/6
+./out/7
+./out/8
+./out/9
+```
+
 The script requires 4 parameters:
 - Two paths relative to the current working directory
   - The location of the image data file
